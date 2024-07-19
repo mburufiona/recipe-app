@@ -1,4 +1,4 @@
-# Wk3-Code-Challenge
+# Phase 1 Project
 ## Recipe-app
 ## Description
 This recipe app is a web application that allows users to search for different types of recipes, which they can also access video references.
