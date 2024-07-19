@@ -53,7 +53,7 @@ Use the provided JSON structure or the one from the example in the project instr
 Start the server by running the following command in the project directory:
 
 ```bash
-json-server --watch db.json 
+json-server db.json 
 ```
 
 5. #### Open the HTML file:
