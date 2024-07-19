@@ -1,5 +1,3 @@
-
-
 const url = "http://localhost:3000/meals";
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -15,40 +13,50 @@ document.addEventListener("DOMContentLoaded", function() {
             const recipeDiv = document.createElement("div");
             recipeDiv.classList.add("recipe");
 
-            const recipeImg = document.createElement("img");
-            recipeImg.src = meal.food_img;
-            recipeImg.alt = meal.foodname;
-            recipeDiv.appendChild(recipeImg);
+            if (meal.food_img) {
+                const recipeImg = document.createElement("img");
+                recipeImg.src = meal.food_img;
+                recipeImg.alt = meal.foodname;
+                recipeDiv.appendChild(recipeImg);
+            }
 
-            const recipeTitle = document.createElement("h2");
-            recipeTitle.textContent = meal.foodname;
-            recipeDiv.appendChild(recipeTitle);
+            if (meal.foodname) {
+                const recipeTitle = document.createElement("h2");
+                recipeTitle.textContent = meal.foodname;
+                recipeDiv.appendChild(recipeTitle);
+            }
 
-            const ingredientsTitle = document.createElement("h3");
-            ingredientsTitle.textContent = "Ingredients:";
-            recipeDiv.appendChild(ingredientsTitle);
+            if (meal.ingredients && Array.isArray(meal.ingredients)) {
+                const ingredientsTitle = document.createElement("h3");
+                ingredientsTitle.textContent = "Ingredients:";
+                recipeDiv.appendChild(ingredientsTitle);
 
-            const ingredientsList = document.createElement("ul");
-            meal.ingredients.forEach(ingredient => {
-                const ingredientItem = document.createElement("li");
-                ingredientItem.textContent = ingredient;
-                ingredientsList.appendChild(ingredientItem);
-            });
-            recipeDiv.appendChild(ingredientsList);
+                const ingredientsList = document.createElement("ul");
+                meal.ingredients.forEach(ingredient => {
+                    const ingredientItem = document.createElement("li");
+                    ingredientItem.textContent = ingredient;
+                    ingredientsList.appendChild(ingredientItem);
+                });
+                recipeDiv.appendChild(ingredientsList);
+            }
 
-            const directionsTitle = document.createElement("h3");
-            directionsTitle.textContent = "Directions:";
-            recipeDiv.appendChild(directionsTitle);
+            if (meal.Directions) {
+                const directionsTitle = document.createElement("h3");
+                directionsTitle.textContent = "Directions:";
+                recipeDiv.appendChild(directionsTitle);
 
-            const directions = document.createElement("p");
-            directions.textContent = meal.Directions;
-            recipeDiv.appendChild(directions);
+                const directions = document.createElement("p");
+                directions.textContent = meal.Directions;
+                recipeDiv.appendChild(directions);
+            }
 
-            const videoLink = document.createElement("a");
-            videoLink.href = meal["video-reference"];
-            videoLink.target = "_blank";
-            videoLink.textContent = "Watch Video";
-            recipeDiv.appendChild(videoLink);
+            if (meal["video-reference"]) {
+                const videoLink = document.createElement("a");
+                videoLink.href = meal["video-reference"];
+                videoLink.target = "_blank";
+                videoLink.textContent = "Watch Video";
+                recipeDiv.appendChild(videoLink);
+            }
 
             recipesContainer.appendChild(recipeDiv);
         });
@@ -56,7 +64,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Fetch the meal data from the server
     fetch(url)
-        .then(response => response.json()) // Parse the JSON response
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json(); // Parse the JSON response
+        })
         .then(data => {
             allMeals = data; // Store the fetched data in allMeals
             displayRecipes(allMeals); // Display all recipes initially
@@ -70,9 +83,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const keyword = document.getElementById("keyword").value.toLowerCase(); // Get the search keyword
         // Filter meals based on the keyword
         const searchedMeals = allMeals.filter(meal =>
-            meal.foodname.toLowerCase().includes(keyword) || // Check if foodname includes the keyword
-            meal.ingredients.some(ingredient => ingredient.toLowerCase().includes(keyword)) || // Check if any ingredient includes the keyword
-            meal.Directions.toLowerCase().includes(keyword) // Check if directions include the keyword
+            (meal.foodname && meal.foodname.toLowerCase().includes(keyword)) || // Check if foodname includes the keyword
+            (meal.ingredients && meal.ingredients.some(ingredient => ingredient.toLowerCase().includes(keyword))) || // Check if any ingredient includes the keyword
+            (meal.Directions && meal.Directions.toLowerCase().includes(keyword)) // Check if directions include the keyword
         );
         displayRecipes(searchedMeals); // Display the filtered recipes
     });

@@ -2,12 +2,35 @@
 
 body {
     font-family: "Pacifico", cursive;
-   background-color: aqua;
+   background-color: wheat;
     padding: 10%;
+    font-size: x-large;
+}
+h1 {
+    text-align: center;
+    font-size: 100px;
+    text-underline-position: below;
+}
+button {
+    background-color: gold;
+    border-radius: 8px ;
+    padding: 20px 25px;
+    font-size: larger;
+}
+button:hover {
+    background-color: aliceblue;
+}
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px;
+    
 }
 
+
 .recipe {
-    border: 1px solid #ccc;
+    border: 3px solid #070000;
     padding: 10px;
     margin-bottom: 20px;
 }
@@ -15,7 +38,10 @@ body {
     max-width: 100%;
     border-radius: 10px;
     height: 200%;
+    display: flex;
+    justify-content: center;
 }
 .ingredients, .directions {
     margin-top: 10px;
 }
+
