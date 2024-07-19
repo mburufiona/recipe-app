@@ -153,3 +153,4 @@ Contributions are welcome! If you have suggestions for improvements or features,
 This project is open-source and available under the MIT License.
 
 ### deployed backend link
+[LINK](https://recipe-app-six-brown.vercel.app/)
