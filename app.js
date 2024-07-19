@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/meals";
+const url = "https://recipe-backend-opal.vercel.app/meals";
 
 document.addEventListener("DOMContentLoaded", function() {
     let allMeals = [];
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
-            return response.json(); // Parse the JSON response
+            return response.json(); // coverts JSON and parse string to objects
         })
         .then(data => {
             allMeals = data; // Store the fetched data in allMeals
